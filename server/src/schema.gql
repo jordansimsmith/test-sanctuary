@@ -2,6 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateInstitutionDto {
+  displayName: String!
+  id: String!
+}
+
+type Institution {
+  displayName: String!
+  id: ID!
+}
+
+type Mutation {
+  createInstitution(input: CreateInstitutionDto!): Institution!
+}
+
 type Query {
-  hello: String!
+  institution(id: String!): Institution
+  institutions: [Institution!]!
 }
