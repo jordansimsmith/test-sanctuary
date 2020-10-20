@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateInstitutionDto } from 'src/dto/create-institution.dto';
+import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { Institution } from './institutions.entity';
 import { InstitutionsService } from './institutions.service';
 
