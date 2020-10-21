@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Test } from 'src/tests/tests.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -11,4 +12,10 @@ export class Institution {
   @Column()
   @Field()
   displayName: string;
+
+  @OneToMany(
+    () => Test,
+    test => test.institution,
+  )
+  tests: Test[];
 }

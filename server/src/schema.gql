@@ -7,6 +7,14 @@ input CreateInstitutionDto {
   id: ID!
 }
 
+input CreateTestDto {
+  code: Int!
+  institutionId: String!
+  name: String!
+  subject: String!
+  year: Int!
+}
+
 type Institution {
   displayName: String!
   id: ID!
@@ -14,6 +22,7 @@ type Institution {
 
 type Mutation {
   createInstitution(input: CreateInstitutionDto!): Institution!
+  createTest(input: CreateTestDto!): Test!
 }
 
 type Query {
