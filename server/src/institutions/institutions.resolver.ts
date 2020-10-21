@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { Institution } from './institutions.entity';
 import { InstitutionsService } from './institutions.service';
@@ -13,7 +13,7 @@ export class InstitutionsResolver {
   }
 
   @Query(() => Institution, { nullable: true })
-  async institution(@Args('id') id: string) {
+  async institution(@Args('id', { type: () => ID }) id: string) {
     return this.institutionsService.findOne(id);
   }
 

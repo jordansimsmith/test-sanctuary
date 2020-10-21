@@ -17,6 +17,16 @@ type Mutation {
 }
 
 type Query {
-  institution(id: String!): Institution
+  institution(id: ID!): Institution
   institutions: [Institution!]!
+  test(id: ID!): Test
+  tests: [Test!]!
+}
+
+type Test {
+  code: Int!
+  id: ID!
+  name: String!
+  subject: String!
+  year: Int!
 }
