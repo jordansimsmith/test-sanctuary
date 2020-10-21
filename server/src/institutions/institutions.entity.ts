@@ -17,5 +17,6 @@ export class Institution {
     () => Test,
     test => test.institution,
   )
-  tests: Test[];
+  @Field(() => [Test])
+  tests: Promise<Test[]>;
 }

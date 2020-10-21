@@ -18,6 +18,7 @@ input CreateTestDto {
 type Institution {
   displayName: String!
   id: ID!
+  tests: [Test!]!
 }
 
 type Mutation {
@@ -35,6 +36,7 @@ type Query {
 type Test {
   code: Int!
   id: ID!
+  institution: Institution!
   name: String!
   subject: String!
   year: Int!

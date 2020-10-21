@@ -29,5 +29,6 @@ export class Test {
     () => Institution,
     institution => institution.tests,
   )
-  institution: Institution;
+  @Field(() => Institution)
+  institution: Promise<Institution>;
 }
