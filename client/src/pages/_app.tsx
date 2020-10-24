@@ -1,11 +1,14 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import withApollo from 'next-with-apollo';
 import App from 'next/app';
+import { Header } from '../components/Header';
+import 'antd/dist/antd.css';
 import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps, apollo }) => {
   return (
     <ApolloProvider client={apollo}>
+      <Header />
       <Component {...pageProps} />
     </ApolloProvider>
   );

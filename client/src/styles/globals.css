@@ -14,3 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ant-page-header-heading-extra {
+  display: flex;
+}
