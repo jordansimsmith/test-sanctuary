@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "generateTypes": "apollo client:codegen --target=typescript --outputFlat types/generated"
+    "generateTypes": "apollo client:codegen --target=typescript --outputFlat src/types/generated"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",

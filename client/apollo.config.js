@@ -4,6 +4,6 @@ module.exports = {
       name: 'test-sanctuary-server',
       localSchemaFile: '../server/src/schema.gql',
     },
-    includes: ['./lib/graphql/**/*.ts'],
+    includes: ['./src/lib/graphql/**/*.ts'],
   },
 };
