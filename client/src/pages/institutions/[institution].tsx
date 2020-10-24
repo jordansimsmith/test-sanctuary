@@ -1,17 +1,31 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { Space, Typography } from 'antd';
 import { NextPage } from 'next';
 import { ApolloPageContext } from 'next-with-apollo';
 import ErrorPage from 'next/error';
-import { GET_INSTITUTION_BY_ID } from '../../lib/graphql/institutions';
-import { GetInstitutionById } from '../../types/generated/GetInstitutionById';
+import { TestCard } from '../../components/TestCard';
+import { GET_INSTITUTION_AND_TESTS } from '../../lib/graphql/institutions';
+import { GetInstitutionAndTests } from '../../types/generated/GetInstitutionAndTests';
 
-interface InstitutionPageProps extends GetInstitutionById {}
+interface InstitutionPageProps extends GetInstitutionAndTests {}
 
 const InstitutionPage: NextPage<InstitutionPageProps> = ({ institution }) => {
   if (!institution) {
     return <ErrorPage statusCode={404} />;
   }
-  return <div>{institution.displayName}</div>;
+  return (
+    <div className="container">
+      <Typography.Title className="title" level={2}>
+        {institution.displayName}
+      </Typography.Title>
+
+      <Space direction="vertical">
+        {institution.tests.map((test) => (
+          <TestCard key={test.id} {...test} />
+        ))}
+      </Space>
+    </div>
+  );
 };
 
 InstitutionPage.getInitialProps = async (ctx: ApolloPageContext) => {
@@ -19,8 +33,8 @@ InstitutionPage.getInitialProps = async (ctx: ApolloPageContext) => {
 
   const client = ctx.apolloClient as ApolloClient<NormalizedCacheObject>;
 
-  const { data } = await client.query<GetInstitutionById>({
-    query: GET_INSTITUTION_BY_ID,
+  const { data } = await client.query<GetInstitutionAndTests>({
+    query: GET_INSTITUTION_AND_TESTS,
     variables: { institutionId },
   });
 

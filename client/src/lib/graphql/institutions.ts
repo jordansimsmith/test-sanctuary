@@ -9,11 +9,18 @@ export const GET_INSTITUTIONS = gql`
   }
 `;
 
-export const GET_INSTITUTION_BY_ID = gql`
-  query GetInstitutionById($institutionId: ID!) {
+export const GET_INSTITUTION_AND_TESTS = gql`
+  query GetInstitutionAndTests($institutionId: ID!) {
     institution(id: $institutionId) {
       id
       displayName
+      tests {
+        id
+        name
+        subject
+        code
+        year
+      }
     }
   }
 `;
