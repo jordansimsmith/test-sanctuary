@@ -31,6 +31,9 @@ export class TestsService {
 
   async findOne(testId: number, institutionId: string): Promise<Test> {
     const test = await this.testsRepository.findOne(testId);
+    if (!test) {
+      return null;
+    }
 
     // ensure the test belongs to the requested institution
     const institution = await test.institution;
