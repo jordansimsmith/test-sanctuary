@@ -33,3 +33,11 @@ a {
   margin: auto;
   padding: 20px;
 }
+
+.ant-form-item-control-input-content {
+  display: flex;
+}
+
+.ant-input-number {
+  flex-grow: 1;
+}

@@ -13,3 +13,15 @@ export const GET_TEST = gql`
     }
   }
 `;
+
+export const CREATE_TEST = gql`
+  mutation CreateTest($test: CreateTestDto!) {
+    createTest(input: $test) {
+      id
+      name
+      code
+      subject
+      year
+    }
+  }
+`;

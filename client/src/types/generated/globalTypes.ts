@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CreateTestDto {
+  code: number;
+  institutionId: string;
+  name: string;
+  subject: string;
+  year: number;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
