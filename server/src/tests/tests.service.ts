@@ -29,7 +29,15 @@ export class TestsService {
     return this.testsRepository.find({ where: query });
   }
 
-  findOne(id: number): Promise<Test> {
-    return this.testsRepository.findOne(id);
+  async findOne(testId: number, institutionId: string): Promise<Test> {
+    const test = await this.testsRepository.findOne(testId);
+
+    // ensure the test belongs to the requested institution
+    const institution = await test.institution;
+    if (institution.id !== institutionId) {
+      return null;
+    }
+
+    return test;
   }
 }

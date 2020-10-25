@@ -18,6 +18,7 @@ input CreateTestDto {
 type Institution {
   displayName: String!
   id: ID!
+  test(id: ID!): Test
   tests: [Test!]!
 }
 
@@ -29,8 +30,6 @@ type Mutation {
 type Query {
   institution(id: ID!): Institution
   institutions: [Institution!]!
-  test(id: ID!): Test
-  tests: [Test!]!
 }
 
 type Test {

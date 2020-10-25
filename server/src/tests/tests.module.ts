@@ -7,5 +7,6 @@ import { TestsService } from './tests.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Test])],
   providers: [TestsResolver, TestsService],
+  exports: [TestsService],
 })
 export class TestsModule {}

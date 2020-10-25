@@ -1,11 +1,24 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  ID,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+  Root,
+} from '@nestjs/graphql';
+import { Test } from 'src/tests/tests.entity';
+import { TestsService } from 'src/tests/tests.service';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { Institution } from './institutions.entity';
 import { InstitutionsService } from './institutions.service';
 
-@Resolver()
+@Resolver(() => Institution)
 export class InstitutionsResolver {
-  constructor(private readonly institutionsService: InstitutionsService) {}
+  constructor(
+    private readonly institutionsService: InstitutionsService,
+    private readonly testsService: TestsService,
+  ) {}
 
   @Query(() => [Institution])
   async institutions() {
@@ -15,6 +28,14 @@ export class InstitutionsResolver {
   @Query(() => Institution, { nullable: true })
   async institution(@Args('id', { type: () => ID }) id: string) {
     return this.institutionsService.findOne(id);
+  }
+
+  @ResolveField(() => Test, { nullable: true })
+  async test(
+    @Root() institution: Institution,
+    @Args('id', { type: () => ID }) id: number,
+  ) {
+    return this.testsService.findOne(id, institution.id);
   }
 
   @Mutation(() => Institution)
