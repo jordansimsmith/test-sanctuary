@@ -32,7 +32,7 @@ export const InstitutionSelector: React.FC<InstitutionSelectorProps> = () => {
       filterOption
       defaultValue={router.query.institution as string}
     >
-      <Input.Search placeholder="Select Institution" />
+      <Input.Search placeholder="Select Institution" allowClear />
     </AutoComplete>
   );
 };
