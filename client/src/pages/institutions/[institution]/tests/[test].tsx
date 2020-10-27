@@ -1,15 +1,15 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Typography } from 'antd';
-import { NextPage } from 'next';
-import { ApolloPageContext } from 'next-with-apollo';
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
 import { GET_TEST } from '../../../../lib/graphql/tests';
 import { GetTest } from '../../../../types/generated/GetTest';
+import { initializeApollo } from '../../../../lib/graphql/apolloClient';
+import { PageProps } from '../../../../types/types';
 
-interface TestPage extends GetTest {}
+interface TestPageProps extends PageProps, GetTest {}
 
-const TestPage: NextPage<TestPage> = ({ institution }) => {
+const TestPage: NextPage<TestPageProps> = ({ institution }) => {
   const test = institution?.test;
   if (!test) {
     return <ErrorPage statusCode={404} />;
@@ -31,18 +31,25 @@ const TestPage: NextPage<TestPage> = ({ institution }) => {
   );
 };
 
-TestPage.getInitialProps = async (ctx: ApolloPageContext) => {
+export const getServerSideProps: GetServerSideProps<TestPageProps> = async (
+  ctx,
+) => {
   const institutionId = ctx.query.institution;
   const testId = ctx.query.test;
 
-  const client = ctx.apolloClient as ApolloClient<NormalizedCacheObject>;
+  const client = initializeApollo();
 
   const { data } = await client.query<GetTest>({
     query: GET_TEST,
     variables: { institutionId, testId },
   });
 
-  return data;
+  return {
+    props: {
+      institution: data.institution,
+      initialApolloState: client.extract(),
+    },
+  };
 };
 
 export default TestPage;

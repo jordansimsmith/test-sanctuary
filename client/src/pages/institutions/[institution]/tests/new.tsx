@@ -9,8 +9,9 @@ import {
   CreateTest,
   CreateTestVariables,
 } from '../../../../types/generated/CreateTest';
+import { PageProps } from '../../../../types/types';
 
-interface NewTestPageProps {}
+interface NewTestPageProps extends PageProps {}
 
 const NewTestPage: NextPage<NewTestPageProps> = () => {
   const router = useRouter();

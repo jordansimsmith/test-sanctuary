@@ -1,16 +1,16 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Button, Space, Typography } from 'antd';
-import { NextPage } from 'next';
-import { ApolloPageContext } from 'next-with-apollo';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
 import Link from 'next/link';
 import { TestCard } from '../../components/TestCard';
+import { initializeApollo } from '../../lib/graphql/apolloClient';
 import { GET_INSTITUTION_AND_TESTS } from '../../lib/graphql/institutions';
 import { GetInstitutionAndTests } from '../../types/generated/GetInstitutionAndTests';
+import { PageProps } from '../../types/types';
 
-interface InstitutionPageProps extends GetInstitutionAndTests {}
+interface InstitutionPageProps extends PageProps, GetInstitutionAndTests {}
 
 const InstitutionPage: NextPage<InstitutionPageProps> = ({ institution }) => {
   const router = useRouter();
@@ -48,17 +48,24 @@ const InstitutionPage: NextPage<InstitutionPageProps> = ({ institution }) => {
   );
 };
 
-InstitutionPage.getInitialProps = async (ctx: ApolloPageContext) => {
+export const getServerSideProps: GetServerSideProps<InstitutionPageProps> = async (
+  ctx,
+) => {
   const institutionId = ctx.query.institution;
 
-  const client = ctx.apolloClient as ApolloClient<NormalizedCacheObject>;
+  const client = initializeApollo();
 
   const { data } = await client.query<GetInstitutionAndTests>({
     query: GET_INSTITUTION_AND_TESTS,
     variables: { institutionId },
   });
 
-  return { institution: data.institution };
+  return {
+    props: {
+      institution: data.institution,
+      initialApolloState: client.extract(),
+    },
+  };
 };
 
 export default InstitutionPage;

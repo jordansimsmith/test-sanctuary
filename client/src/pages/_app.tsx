@@ -1,28 +1,18 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import withApollo from 'next-with-apollo';
-import App from 'next/app';
+import { AppProps } from 'next/app';
+import { ApolloProvider } from '@apollo/client';
 import { Header } from '../components/Header';
+import { useApollo } from '../lib/graphql/apolloClient';
 import 'antd/dist/antd.css';
 import '../styles/globals.css';
 
-const MyApp = ({ Component, pageProps, apollo }) => {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const apolloClient = useApollo(pageProps.initialApolloState);
   return (
-    <ApolloProvider client={apollo}>
+    <ApolloProvider client={apolloClient}>
       <Header />
       <Component {...pageProps} />
     </ApolloProvider>
   );
 };
 
-MyApp.getInitialProps = async (appContext) => {
-  const appProps = await App.getInitialProps(appContext);
-  return { ...appProps };
-};
-
-export default withApollo(
-  ({ initialState }) =>
-    new ApolloClient({
-      uri: 'http://localhost:5000/graphql',
-      cache: new InMemoryCache().restore(initialState || {}),
-    }),
-)(MyApp);
+export default MyApp;
