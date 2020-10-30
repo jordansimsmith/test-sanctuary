@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Question } from 'src/questions/questions.entity';
 import { Repository } from 'typeorm';
 import { CreateTestDto } from './dto/create-test.dto';
 import { Test } from './tests.entity';
@@ -17,6 +18,16 @@ export class TestsService {
     test.code = createTestDto.code;
     test.year = createTestDto.year;
     test['institution' as any] = createTestDto.institutionId;
+
+    test.questions = Promise.resolve(
+      createTestDto.questions.map(q => {
+        const question = new Question();
+        question.label = q.label;
+        question.answer = q.label;
+
+        return question;
+      }),
+    );
 
     return this.testsRepository.save(test);
   }

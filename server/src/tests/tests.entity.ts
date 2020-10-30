@@ -42,6 +42,7 @@ export class Test {
   @OneToMany(
     () => Question,
     question => question.test,
+    { cascade: true, onDelete: 'CASCADE' },
   )
   @Field(() => [Question])
   questions: Promise<Question[]>;

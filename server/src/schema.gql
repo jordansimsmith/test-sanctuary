@@ -7,10 +7,16 @@ input CreateInstitutionDto {
   id: ID!
 }
 
+input CreateQuestionDto {
+  answer: String!
+  label: String!
+}
+
 input CreateTestDto {
   code: Int!
   institutionId: String!
   name: String!
+  questions: [CreateQuestionDto!]!
   subject: String!
   year: Int!
 }
