@@ -1,5 +1,6 @@
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Divider, Form, Input, InputNumber, Space } from 'antd';
 import { useRouter } from 'next/dist/client/router';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 interface TestFormProps {
   onFinish(values: any): void;
@@ -23,6 +24,8 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
       onFinish={onFinish}
       labelCol={{ span: 3 }}
     >
+      <Divider>Test Information</Divider>
+
       <Form.Item
         label="Institution"
         name="institutionId"
@@ -74,6 +77,63 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
       >
         <InputNumber placeholder="2018" />
       </Form.Item>
+
+      <Divider>Questions</Divider>
+
+      <Form.List name="questions">
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map((field) => (
+              <Space
+                key={field.key}
+                align="baseline"
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <Form.Item
+                  {...field}
+                  key={field.key}
+                  name={[field.name, 'label']}
+                  fieldKey={[field.fieldKey, 'label']}
+                  label="Label"
+                  labelCol={{}}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input a valid question label',
+                    },
+                  ]}
+                >
+                  <Input placeholder="3a" />
+                </Form.Item>
+
+                <Form.Item
+                  {...field}
+                  key={field.key}
+                  name={[field.name, 'answer']}
+                  fieldKey={[field.fieldKey, 'answer']}
+                  label="Answer"
+                  labelCol={{}}
+                >
+                  <Input placeholder="d (optional)" />
+                </Form.Item>
+
+                <MinusCircleOutlined onClick={() => remove(field.name)} />
+              </Space>
+            ))}
+
+            <Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                block
+                icon={<PlusOutlined />}
+              >
+                Add question
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>

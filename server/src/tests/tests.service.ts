@@ -23,7 +23,7 @@ export class TestsService {
       createTestDto.questions.map(q => {
         const question = new Question();
         question.label = q.label;
-        question.answer = q.label;
+        question.answer = q.answer;
 
         return question;
       }),
