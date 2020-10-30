@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Institution } from './institutions/institutions.entity';
 import { InstitutionsModule } from './institutions/institutions.module';
+import { Question } from './questions/questions.entity';
+import { QuestionsModule } from './questions/questions.module';
 import { Test } from './tests/tests.entity';
 import { TestsModule } from './tests/tests.module';
 
@@ -12,6 +14,7 @@ import { TestsModule } from './tests/tests.module';
   imports: [
     InstitutionsModule,
     TestsModule,
+    QuestionsModule,
     GraphQLModule.forRoot({
       autoSchemaFile: 'src/schema.gql',
       sortSchema: true,
@@ -23,7 +26,7 @@ import { TestsModule } from './tests/tests.module';
       username: 'typeormuser',
       password: 'password',
       database: 'test_sanctuary',
-      entities: [Institution, Test],
+      entities: [Institution, Test, Question],
       synchronize: true,
     }),
   ],

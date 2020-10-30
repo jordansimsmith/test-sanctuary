@@ -1,6 +1,13 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Institution } from 'src/institutions/institutions.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Question } from 'src/questions/questions.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -31,4 +38,10 @@ export class Test {
   )
   @Field(() => Institution)
   institution: Promise<Institution>;
+
+  @OneToMany(
+    () => Question,
+    question => question.test,
+  )
+  questions: Promise<Question[]>;
 }
