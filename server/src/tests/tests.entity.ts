@@ -43,5 +43,6 @@ export class Test {
     () => Question,
     question => question.test,
   )
+  @Field(() => [Question])
   questions: Promise<Question[]>;
 }

@@ -32,11 +32,19 @@ type Query {
   institutions: [Institution!]!
 }
 
+type Question {
+  answer: String!
+  id: ID!
+  label: String!
+  test: Test!
+}
+
 type Test {
   code: Int!
   id: ID!
   institution: Institution!
   name: String!
+  questions: [Question!]!
   subject: String!
   year: Int!
 }
