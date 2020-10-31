@@ -1,11 +1,32 @@
-import { Button, Divider, Form, Input, InputNumber, Space } from 'antd';
+import { Button, Divider, Form, Input, InputNumber, Space, Upload } from 'antd';
 import { useRouter } from 'next/dist/client/router';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  InboxOutlined,
+} from '@ant-design/icons';
 
 interface TestFormProps {
   onFinish(values: any): void;
   loading?: boolean;
 }
+
+// adapter between upload component and form component
+const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  if (!e) {
+    return e;
+  }
+
+  if (e.fileList.length > 1) {
+    e.fileList.shift();
+  }
+
+  return e.fileList;
+};
 
 export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
   const router = useRouter();
@@ -16,13 +37,19 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
     subject: '',
     code: undefined,
     year: undefined,
+    questions: [],
+    testFile: undefined,
+  };
+
+  const transformValuesAndFinish = (values) => {
+    onFinish({ ...values, testFile: values.testFile[0]?.originFileObj });
   };
 
   return (
     <Form
       initialValues={initialValues}
-      onFinish={onFinish}
-      labelCol={{ span: 3 }}
+      onFinish={transformValuesAndFinish}
+      labelCol={{ span: 4 }}
     >
       <Divider>Test Information</Divider>
 
@@ -60,6 +87,7 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
             message: 'Please input a valid integer code',
           },
         ]}
+        className="input-number-block"
       >
         <InputNumber placeholder="711" />
       </Form.Item>
@@ -74,8 +102,24 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
             message: 'Please input a valid year',
           },
         ]}
+        className="input-number-block"
       >
         <InputNumber placeholder="2018" />
+      </Form.Item>
+
+      <Form.Item
+        label="Questions Upload"
+        name="testFile"
+        rules={[
+          { required: true, message: 'Please select a valid questions file' },
+        ]}
+        valuePropName="fileList"
+        getValueFromEvent={normFile}
+      >
+        <Upload.Dragger>
+          <InboxOutlined />
+          <p>Upload</p>
+        </Upload.Dragger>
       </Form.Item>
 
       <Divider>Questions</Divider>

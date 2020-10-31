@@ -34,10 +34,18 @@ a {
   padding: 20px;
 }
 
-.ant-form-item-control-input-content {
+.input-number-block .ant-form-item-control-input-content {
   display: flex;
 }
 
 .ant-input-number {
   flex-grow: 1;
+}
+
+.ant-form-item-control-input-content span {
+  flex-grow: 1;
+}
+
+.ant-upload-drag {
+  background-color: white !important;
 }

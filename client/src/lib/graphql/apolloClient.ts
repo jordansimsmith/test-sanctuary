@@ -3,6 +3,7 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
 import { useMemo } from 'react';
 
 /**
@@ -15,7 +16,9 @@ let apolloClient: ApolloClient<NormalizedCacheObject>;
 const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    uri: 'http://localhost:5000/graphql',
+    link: createUploadLink({
+      uri: 'http://localhost:5000/graphql',
+    }),
     cache: new InMemoryCache(),
   });
 };

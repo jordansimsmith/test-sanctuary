@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { createWriteStream } from 'fs';
 import { Question } from 'src/questions/questions.entity';
 import { Repository } from 'typeorm';
 import { CreateTestDto } from './dto/create-test.dto';
@@ -11,7 +12,17 @@ export class TestsService {
     @InjectRepository(Test) private readonly testsRepository: Repository<Test>,
   ) {}
 
-  create(createTestDto: CreateTestDto): Promise<Test> {
+  async create(createTestDto: CreateTestDto): Promise<Test> {
+    const testFile = await createTestDto.testFile;
+
+    await new Promise<void>((resolve, reject) =>
+      testFile
+        .createReadStream()
+        .pipe(createWriteStream(`./uploads/${testFile.filename}`))
+        .on('finish', () => resolve())
+        .on('error', () => reject()),
+    );
+
     const test = new Test();
     test.name = createTestDto.name;
     test.subject = createTestDto.subject;
