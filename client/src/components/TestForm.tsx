@@ -116,7 +116,7 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
-        <Upload.Dragger>
+        <Upload.Dragger accept=".pdf">
           <InboxOutlined />
           <p>Upload</p>
         </Upload.Dragger>

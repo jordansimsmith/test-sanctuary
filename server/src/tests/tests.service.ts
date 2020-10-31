@@ -14,9 +14,9 @@ export class TestsService {
   ) {}
 
   async create(createTestDto: CreateTestDto): Promise<Test> {
-    // upload file
-    const fileKey = await this.filesService.saveFile(
+    const fileKey = await this.filesService.uploadTest(
       await createTestDto.testFile,
+      createTestDto.institutionId,
     );
 
     const test = new Test();
