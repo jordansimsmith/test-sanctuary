@@ -42,4 +42,13 @@ export class FilesService {
 
     return objKey;
   }
+
+  getDownloadLink(objKey: string): Promise<string> {
+    const params = {
+      Bucket: this.configService.get<string>('AWS_S3_BUCKET'),
+      Key: objKey,
+    };
+
+    return this.s3client.getSignedUrlPromise('getObject', params);
+  }
 }

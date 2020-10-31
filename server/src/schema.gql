@@ -53,6 +53,7 @@ type Test {
   name: String!
   questions: [Question!]!
   subject: String!
+  testFileLink: String!
   year: Int!
 }
 
