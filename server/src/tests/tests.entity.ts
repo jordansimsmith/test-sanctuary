@@ -46,4 +46,7 @@ export class Test {
   )
   @Field(() => [Question])
   questions: Promise<Question[]>;
+
+  @Column()
+  testFileKey: string;
 }
