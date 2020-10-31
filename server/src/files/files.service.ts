@@ -3,18 +3,22 @@ import { FileUpload } from 'graphql-upload';
 import { Credentials, S3 } from 'aws-sdk';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { v4 as uuid } from 'uuid';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FilesService {
   private readonly s3client: S3;
+  private readonly configService: ConfigService;
 
-  constructor() {
+  constructor(configService: ConfigService) {
+    this.configService = configService;
+
     this.s3client = new S3({
       credentials: new Credentials({
-        accessKeyId: 'jordan',
-        secretAccessKey: 'applesoranges',
+        accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: configService.get<string>('AWS_SECRET_KEY'),
       }),
-      endpoint: 'http://localhost:9000',
+      endpoint: configService.get<string | undefined>('AWS_S3_ENDPOINT'),
       s3ForcePathStyle: true,
       signatureVersion: 'v4',
     });
@@ -28,7 +32,7 @@ export class FilesService {
     const objKey = `${institutionId}/tests/${uuid()}.pdf`;
 
     const params: PutObjectRequest = {
-      Bucket: 'test-sanctuary',
+      Bucket: this.configService.get<string>('AWS_S3_BUCKET'),
       Key: objKey,
       Body: file.createReadStream(),
       ContentType: file.mimetype,

@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import Joi from '@hapi/joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Institution } from './institutions/institutions.entity';
@@ -15,19 +17,37 @@ import { TestsModule } from './tests/tests.module';
     InstitutionsModule,
     TestsModule,
     QuestionsModule,
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DATABASE_HOST: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+        DATABASE_USERNAME: Joi.string().required(),
+        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_NAME: Joi.string().required(),
+
+        AWS_ACCESS_KEY_ID: Joi.string().required(),
+        AWS_SECRET_KEY: Joi.string().required(),
+        AWS_S3_ENDPOINT: Joi.string().optional(),
+        AWS_S3_BUCKET: Joi.string().required(),
+      }),
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'src/schema.gql',
       sortSchema: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mariadb',
-      host: 'localhost',
-      port: 3306,
-      username: 'typeormuser',
-      password: 'password',
-      database: 'test_sanctuary',
-      entities: [Institution, Test, Question],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mariadb',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: configService.get<number>('DATABASE_PORT'),
+        username: configService.get<string>('DATABASE_USERNAME'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        database: configService.get<string>('DATABASE_NAME'),
+        entities: [Institution, Test, Question],
+        synchronize: true,
+      }),
     }),
   ],
   controllers: [AppController],
