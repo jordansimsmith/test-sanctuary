@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   ID,
@@ -7,6 +8,7 @@ import {
   Resolver,
   Root,
 } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { Test } from 'src/tests/tests.entity';
 import { TestsService } from 'src/tests/tests.service';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
@@ -39,6 +41,7 @@ export class InstitutionsResolver {
   }
 
   @Mutation(() => Institution)
+  @UseGuards(GqlAuthGuard)
   async createInstitution(@Args('input') input: CreateInstitutionDto) {
     return this.institutionsService.create(input);
   }
