@@ -1,4 +1,3 @@
-import { Typography } from 'antd';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
@@ -6,6 +5,7 @@ import { GET_TEST } from '../../../../lib/graphql/tests';
 import { GetTest } from '../../../../types/generated/GetTest';
 import { initializeApollo } from '../../../../lib/graphql/apolloClient';
 import { PageProps } from '../../../../types/types';
+import { TestDetails } from '../../../../components/TestDetails';
 
 interface TestPageProps extends PageProps, GetTest {}
 
@@ -23,9 +23,7 @@ const TestPage: NextPage<TestPageProps> = ({ institution }) => {
       </Head>
 
       <main>
-        <Typography.Title className="title" level={2}>
-          {test.name}
-        </Typography.Title>
+        <TestDetails test={test} />
       </main>
     </div>
   );

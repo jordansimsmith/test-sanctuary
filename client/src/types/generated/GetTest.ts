@@ -14,6 +14,7 @@ export interface GetTest_institution_test {
   subject: string;
   code: number;
   year: number;
+  testFileLink: string;
 }
 
 export interface GetTest_institution {

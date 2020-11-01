@@ -9,6 +9,7 @@ export const GET_TEST = gql`
         subject
         code
         year
+        testFileLink
       }
     }
   }
