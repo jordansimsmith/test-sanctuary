@@ -11,12 +11,14 @@ import { Question } from './questions/questions.entity';
 import { QuestionsModule } from './questions/questions.module';
 import { Test } from './tests/tests.entity';
 import { TestsModule } from './tests/tests.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     InstitutionsModule,
     TestsModule,
     QuestionsModule,
+    AuthModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         DATABASE_HOST: Joi.string().required(),
@@ -29,6 +31,9 @@ import { TestsModule } from './tests/tests.module';
         AWS_SECRET_KEY: Joi.string().required(),
         AWS_S3_ENDPOINT: Joi.string().optional(),
         AWS_S3_BUCKET: Joi.string().required(),
+
+        AUTH0_ISSUER_URL: Joi.string().required(),
+        AUTH0_AUDIENCE: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot({
