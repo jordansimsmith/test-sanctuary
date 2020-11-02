@@ -4,11 +4,15 @@ import Link from 'next/link';
 import { InstitutionSelector } from './InstitutionSelector';
 import { useContext } from 'react';
 import { UserContext } from './UserContext';
+import { createLoginUrl } from '../lib/auth/auth';
 
 interface HeaderActionsProps {}
 
 const HeaderActions: React.FC<HeaderActionsProps> = () => {
   const { user, loading } = useContext(UserContext);
+
+  const router = useRouter();
+  const loginUrl = createLoginUrl(router.asPath);
 
   return (
     <Space>
@@ -22,7 +26,7 @@ const HeaderActions: React.FC<HeaderActionsProps> = () => {
           <Button href="/api/logout">Log Out</Button>
         </>
       ) : (
-        <Button href="/api/login">Log In</Button>
+        <Button href={loginUrl}>Log In</Button>
       )}
     </Space>
   );

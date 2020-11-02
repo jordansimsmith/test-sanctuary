@@ -6,7 +6,7 @@ const callback = async (
   res: NextApiResponse,
 ): Promise<void> => {
   try {
-    await auth.handleCallback(req, res, { redirectTo: '/' });
+    await auth.handleCallback(req, res);
   } catch (error) {
     console.error(error);
     res.status(error.status || 400).end(error.message);

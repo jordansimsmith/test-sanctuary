@@ -24,3 +24,12 @@ export const getAccessToken = async (): Promise<string | null> => {
   const { accessToken } = await res.json();
   return accessToken;
 };
+
+export const createLoginUrl = (redirectTo?: string): string => {
+  let url = `${process.env.NEXT_PUBLIC_CLIENT_BASE}/api/login`;
+  if (redirectTo) {
+    url = url.concat(`?redirectTo=${encodeURIComponent(redirectTo)}`);
+  }
+
+  return url;
+};
