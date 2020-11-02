@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Institution } from './institutions/institutions.entity';
