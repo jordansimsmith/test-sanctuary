@@ -18,7 +18,7 @@ export const auth = initAuth0({
 
 export const getAccessToken = async (): Promise<string | null> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_BASE}/api/token`);
-  if (res.status !== 200) {
+  if (!res.ok) {
     return null;
   }
   const { accessToken } = await res.json();
