@@ -1,7 +1,7 @@
 import { NormalizedCacheObject } from '@apollo/client';
 
 export interface PageProps {
-  initialApolloState: NormalizedCacheObject;
+  initialApolloState?: NormalizedCacheObject;
 }
 
 export interface UserProfile {
