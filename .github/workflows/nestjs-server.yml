@@ -1,0 +1,27 @@
+name: Nest.js Server Build Workflow
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build and Push Nest.js Server Container
+    runs-on: ubuntu-latest
+    env:
+      REPO: ${{ secrets.DOCKER_NESTJS_SERVER_REPO }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+
+      - name: Build docker image
+        run: >
+          docker build
+          -t $REPO:latest -t $REPO:${GITHUB_SHA::8}
+          server
+
+      - name: Push docker image
+        run: docker push $REPO
