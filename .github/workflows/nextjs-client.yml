@@ -21,6 +21,8 @@ jobs:
         run: >
           docker build
           -t $REPO:latest -t $REPO:${GITHUB_SHA::8}
+          --build-arg NEXT_PUBLIC_CLIENT_BASE=${{ secrets.CLIENT_BASE }}
+          --build-arg NEXT_PUBLIC_SERVER_BASE=${{ secrets.SERVER_BASE }}
           client
 
       - name: Push docker image

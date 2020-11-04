@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-client-service
+spec:
+  selector:
+    app: nextjs-client
+  ports:
+    - protocol: TCP
+      port: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-client-deployment
+  labels:
+    app: nextjs-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjs-client
+  template:
+    metadata:
+      labels:
+        app: nextjs-client
+    spec:
+      containers:
+        - name: nextjs-client
+          image: jordansimsmith/test-sanctuary-nextjs-client:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: AUTH0_DOMAIN
+              value: test-sanctuary.au.auth0.com
+            - name: AUTH0_CLIENT_ID
+              value: w13G1x7R50OBwYoF558sISx72vVf30ou
+            - name: AUTH0_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth0
+                  key: auth0-client-secret
+            - name: AUTH0_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth0
+                  key: auth0-cookie-secret
+            - name: AUTH0_API_AUDIENCE
+              value: https://test-sanctuary-api.com
+            - name: NEXT_PUBLIC_CLIENT_BASE
+              value: http://192.168.0.7:32109
+            - name: NEXT_PUBLIC_SERVER_BASE
+              value: http://192.168.0.7:32109/api
