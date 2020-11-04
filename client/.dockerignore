@@ -1,6 +1,7 @@
 .dockerignore
 Dockerfile
 .env
+.env.example
 .gitignore
 .next/
 node_modules/
