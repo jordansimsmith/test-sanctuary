@@ -1,0 +1,27 @@
+name: Next.js Client Build Workflow
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build and Push Next.js Client Container
+    runs-on: ubuntu-latest
+    env:
+      REPO: ${{ secrets.DOCKER_NEXTJS_CLIENT_REPO }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+
+      - name: Build docker image
+        run: >
+          docker build
+          -t $REPO:latest -t $REPO:${GITHUB_SHA::8}
+          client
+
+      - name: Push docker image
+        run: docker push $REPO
