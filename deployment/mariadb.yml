@@ -52,8 +52,10 @@ spec:
         app: mariadb
     spec:
       containers:
-        - image: mariadb:latest
-          name: mariadb
+        - name: mariadb
+          image: mariadb:latest
+          ports:
+            - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -75,3 +77,10 @@ spec:
                 secretKeyRef:
                   name: mariadb
                   key: mysql-password
+          volumeMounts:
+            - name: mariadb-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-persistent-storage
+          persistentVolumeClaim:
+            claimName: mariadb-pv-claim
