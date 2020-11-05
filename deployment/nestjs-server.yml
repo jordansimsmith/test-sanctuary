@@ -61,7 +61,7 @@ spec:
                   name: aws
                   key: aws-secret-key
             - name: AWS_S3_ENDPOINT
-              value: http://minio-service:9000
+              value: http://192.168.1.7:32109/api/storage
             - name: AWS_S3_BUCKET
               value: test-sanctuary
             - name: AUTH0_ISSUER_URL

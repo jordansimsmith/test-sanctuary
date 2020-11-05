@@ -31,7 +31,8 @@ metadata:
   name: mariadb-service
 spec:
   ports:
-    - port: 3306
+    - protocol: TCP
+      port: 3306
   selector:
     app: mariadb
   clusterIP: None
