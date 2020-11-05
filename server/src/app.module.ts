@@ -2,14 +2,12 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { join } from 'path';
 import Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Institution } from './institutions/institutions.entity';
 import { InstitutionsModule } from './institutions/institutions.module';
-import { Question } from './questions/questions.entity';
 import { QuestionsModule } from './questions/questions.module';
-import { Test } from './tests/tests.entity';
 import { TestsModule } from './tests/tests.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -51,7 +49,7 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('DATABASE_USERNAME'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [Institution, Test, Question],
+        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         synchronize: true,
       }),
     }),
