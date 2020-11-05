@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nestjs-server-service
+spec:
+  selector:
+    app: nestjs-server
+  ports:
+    - protocol: TCP
+      port: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-server-deployment
+  labels:
+    app: nestjs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs-server
+  template:
+    metadata:
+      labels:
+        app: nestjs-server
+    spec:
+      containers:
+        - name: nestjs-server
+          image: jordansimsmith/test-sanctuary-nestjs-server:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DATABASE_HOST
+              value: mariadb-service
+            - name: DATABASE_PORT
+              value: '3306'
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-password
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-database
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: aws-access-key-id
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: aws-secret-key
+            - name: AWS_S3_ENDPOINT
+              value: http://minio-service:9000
+            - name: AWS_S3_BUCKET
+              value: test-sanctuary
+            - name: AUTH0_ISSUER_URL
+              value: https://test-sanctuary.au.auth0.com/
+            - name: AUTH0_AUDIENCE
+              value: https://test-sanctuary-api.com
