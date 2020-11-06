@@ -48,6 +48,6 @@ spec:
             - name: AUTH0_API_AUDIENCE
               value: https://test-sanctuary-api.com
             - name: NEXT_PUBLIC_CLIENT_BASE
-              value: http://192.168.1.7:32109
+              value: https://192.168.1.7:30977
             - name: NEXT_PUBLIC_SERVER_BASE
-              value: http://192.168.1.7:32109/api
+              value: https://192.168.1.7:30977/api
