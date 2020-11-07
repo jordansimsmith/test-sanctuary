@@ -24,3 +24,12 @@ export const GET_INSTITUTION_AND_TESTS = gql`
     }
   }
 `;
+
+export const CREATE_INSTITUTION = gql`
+  mutation CreateInstitution($institution: CreateInstitutionDto!) {
+    createInstitution(input: $institution) {
+      id
+      displayName
+    }
+  }
+`;

@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CreateInstitutionDto {
+  displayName: string;
+  id: string;
+}
+
 export interface CreateQuestionDto {
   answer: string;
   label: string;

@@ -17,7 +17,7 @@ interface NewTestPageProps extends PageProps {}
 const NewTestPage: NextPage<NewTestPageProps> = () => {
   const router = useRouter();
 
-  const navigateToNewTest = (data) => {
+  const navigateToNewTest = (data: CreateTest) => {
     const newTestUrl = `/institutions/${router.query.institution}/tests/${data.createTest.id}`;
     router.push(newTestUrl);
   };
