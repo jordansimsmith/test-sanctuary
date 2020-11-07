@@ -27,7 +27,13 @@ export const InstitutionForm: React.FC<InstitutionFormProps> = ({
         label="Identifier/URL"
         name="id"
         rules={[
-          { required: true, message: 'Please enter a valid institution url' },
+          {
+            required: true,
+            min: 3,
+            pattern: /^[a-zA-Z0-9]+[a-zA-Z0-9-_]+[a-zA-Z0-9]+$/,
+            message:
+              'Please enter a valid institution id of minimum length 3 that contains only alphanumeric characters with dashes or underscores separating them.',
+          },
         ]}
       >
         <Input placeholder="universityofauckland" />

@@ -14,9 +14,16 @@ export class InstitutionsService {
   async create(
     createInstitutionDto: CreateInstitutionDto,
   ): Promise<Institution> {
+    const idRegex = /^[a-zA-Z0-9]+[a-zA-Z0-9-_]+[a-zA-Z0-9]+$/;
+    if (!idRegex.test(createInstitutionDto.id)) {
+      throw new Error(
+        `Institution ID ${createInstitutionDto.id} is invalid. Please try again with an ID of minimum length 3 that contains only alphanumeric characters with dashes or underscores separating them.`,
+      );
+    }
+
     if (await this.institutionsRepository.findOne(createInstitutionDto.id)) {
       throw new Error(
-        `Institution ID ${createInstitutionDto.id} is already taken, please try with another ID`,
+        `Institution ID ${createInstitutionDto.id} is already taken. Please try with another ID.`,
       );
     }
 
