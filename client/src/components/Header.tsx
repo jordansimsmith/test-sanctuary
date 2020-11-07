@@ -1,8 +1,9 @@
 import { Button, PageHeader, Space, Spin } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { InstitutionSelector } from './InstitutionSelector';
-import { useContext } from 'react';
 import { UserContext } from './UserContext';
 import { createLoginUrl } from '../lib/auth/auth';
 
@@ -22,7 +23,9 @@ const HeaderActions: React.FC<HeaderActionsProps> = () => {
 
       {user ? (
         <>
-          <span>{user.name}</span>
+          <Button href="/profile" icon={<UserOutlined />}>
+            {user.name}
+          </Button>
           <Button href="/api/logout">Log Out</Button>
         </>
       ) : (
