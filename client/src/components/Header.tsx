@@ -1,5 +1,5 @@
-import { Button, Col, PageHeader, Row, Space, Spin } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Button, Col, PageHeader, Row, Tooltip } from 'antd';
+import { UserOutlined, PlusOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -17,8 +17,19 @@ const HeaderActions: React.FC<HeaderActionsProps> = () => {
 
   return (
     <Row gutter={[6, 6]}>
-      <Col xs={24} sm={12} className="col-block">
+      <Col xs={20} sm={10} className="col-block">
         <InstitutionSelector />
+      </Col>
+
+      <Col xs={4} sm={2}>
+        <Tooltip title="Create an institution">
+          <Button
+            href="/institutions/new"
+            icon={<PlusOutlined />}
+            block
+            disabled={!user}
+          />
+        </Tooltip>
       </Col>
 
       <Col xs={24} sm={8}>
