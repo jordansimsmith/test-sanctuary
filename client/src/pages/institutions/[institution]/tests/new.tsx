@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { TestForm } from '../../../../components/TestForm';
-import { auth, createLoginUrl } from '../../../../lib/auth/auth';
+import { getSessionOrLogin } from '../../../../lib/auth/auth';
 import { CREATE_TEST } from '../../../../lib/graphql/tests';
 import {
   CreateTest,
@@ -52,12 +52,8 @@ const NewTestPage: NextPage<NewTestPageProps> = () => {
 export const getServerSideProps: GetServerSideProps<NewTestPageProps> = async (
   ctx,
 ) => {
-  const session = await auth.getSession(ctx.req);
-  if (!session || !session.user) {
-    ctx.res.writeHead(302, {
-      Location: createLoginUrl(ctx.req.url),
-    });
-    ctx.res.end();
+  const session = await getSessionOrLogin(ctx);
+  if (!session) {
     return;
   }
 

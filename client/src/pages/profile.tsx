@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { auth, createLoginUrl } from '../lib/auth/auth';
+import { getSessionOrLogin } from '../lib/auth/auth';
 import { PageProps, UserProfile } from '../types/types';
 
 interface ProfilePageProps extends PageProps {
@@ -28,12 +28,8 @@ const Profile: NextPage<ProfilePageProps> = ({ user }) => {
 export const getServerSideProps: GetServerSideProps<ProfilePageProps> = async (
   ctx,
 ) => {
-  const session = await auth.getSession(ctx.req);
-  if (!session || !session.user) {
-    ctx.res.writeHead(302, {
-      Location: createLoginUrl(ctx.req.url),
-    });
-    ctx.res.end();
+  const session = await getSessionOrLogin(ctx);
+  if (!session) {
     return;
   }
 
