@@ -27,7 +27,13 @@ const NewTestPage: NextPage<NewTestPageProps> = () => {
     CreateTestVariables
   >(CREATE_TEST, { onCompleted: navigateToNewTest });
 
-  const onFinish = (test) => createTest({ variables: { test } });
+  const onFinish = async (test) => {
+    try {
+      createTest({ variables: { test } });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="container">

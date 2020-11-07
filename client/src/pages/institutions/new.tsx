@@ -27,8 +27,13 @@ const NewInstitutionPage: NextPage<NewInstitutionPageProps> = () => {
     CreateInstitutionVariables
   >(CREATE_INSTITUTION, { onCompleted: navigateToNewInstitution });
 
-  const onFinish = (institution) =>
-    createInstitution({ variables: { institution } });
+  const onFinish = async (institution) => {
+    try {
+      await createInstitution({ variables: { institution } });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="container">

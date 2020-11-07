@@ -11,7 +11,15 @@ export class InstitutionsService {
     private readonly institutionsRepository: Repository<Institution>,
   ) {}
 
-  create(createInstitutionDto: CreateInstitutionDto): Promise<Institution> {
+  async create(
+    createInstitutionDto: CreateInstitutionDto,
+  ): Promise<Institution> {
+    if (await this.institutionsRepository.findOne(createInstitutionDto.id)) {
+      throw new Error(
+        `Institution ID ${createInstitutionDto.id} is already taken, please try with another ID`,
+      );
+    }
+
     const institution = new Institution();
     institution.id = createInstitutionDto.id;
     institution.displayName = createInstitutionDto.displayName;
