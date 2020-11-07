@@ -1,4 +1,4 @@
-import { Button, PageHeader, Space, Spin } from 'antd';
+import { Button, Col, PageHeader, Row, Space, Spin } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
@@ -10,28 +10,35 @@ import { createLoginUrl } from '../lib/auth/auth';
 interface HeaderActionsProps {}
 
 const HeaderActions: React.FC<HeaderActionsProps> = () => {
-  const { user, loading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const router = useRouter();
   const loginUrl = createLoginUrl(router.asPath);
 
   return (
-    <Space>
-      <InstitutionSelector />
+    <Row gutter={[6, 6]}>
+      <Col xs={24} sm={12} className="col-block">
+        <InstitutionSelector />
+      </Col>
 
-      {loading && <Spin />}
+      <Col xs={24} sm={8}>
+        <Button href="/profile" icon={<UserOutlined />} block disabled={!user}>
+          {user?.name ?? 'Profile'}
+        </Button>
+      </Col>
 
-      {user ? (
-        <>
-          <Button href="/profile" icon={<UserOutlined />}>
-            {user.name}
+      <Col xs={24} sm={4}>
+        {user ? (
+          <Button href="/api/logout" block>
+            Log Out
           </Button>
-          <Button href="/api/logout">Log Out</Button>
-        </>
-      ) : (
-        <Button href={loginUrl}>Log In</Button>
-      )}
-    </Space>
+        ) : (
+          <Button href={loginUrl} block>
+            Log In
+          </Button>
+        )}
+      </Col>
+    </Row>
   );
 };
 

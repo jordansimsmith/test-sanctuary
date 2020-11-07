@@ -49,3 +49,11 @@ a {
 .ant-upload-drag {
   background-color: white !important;
 }
+
+.col-block {
+  display: flex;
+}
+
+.autocomplete-block {
+  flex-grow: 1;
+}
