@@ -2,6 +2,7 @@ import { Typography } from 'antd';
 import { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React from 'react';
+import { InstitutionForm } from '../../components/InstitutionForm';
 import { getSessionOrLogin } from '../../lib/auth/auth';
 import { PageProps } from '../../types/types';
 
@@ -18,6 +19,9 @@ const NewInstitutionPage: NextPage<NewInstitutionPageProps> = () => {
       <main>
         <Typography.Title className="title" level={2}>
           Create Institution
+          <InstitutionForm
+            onFinish={(e) => alert(JSON.stringify(e, null, 2))}
+          />
         </Typography.Title>
       </main>
     </div>
