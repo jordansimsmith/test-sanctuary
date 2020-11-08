@@ -1,4 +1,4 @@
-import { Button, Descriptions, Tag, Typography } from 'antd';
+import { Button, Descriptions, Tag } from 'antd';
 import { GetTest_institution_test } from '../types/generated/GetTest';
 
 interface TestDetailsProps {
@@ -8,11 +8,7 @@ interface TestDetailsProps {
 export const TestDetails: React.FC<TestDetailsProps> = ({ test }) => {
   return (
     <div>
-      <Typography.Title className="title" level={2}>
-        {test.name}
-      </Typography.Title>
-
-      <Descriptions title="Test Information" layout="vertical">
+      <Descriptions layout="vertical">
         <Descriptions.Item label="Subject">
           <Tag color="blue">{test.subject}</Tag>
         </Descriptions.Item>

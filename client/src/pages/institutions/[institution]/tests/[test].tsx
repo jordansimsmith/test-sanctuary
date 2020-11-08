@@ -1,3 +1,4 @@
+import { Button, Divider, Typography } from 'antd';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
@@ -6,11 +7,16 @@ import { GetTest } from '../../../../types/generated/GetTest';
 import { initializeApollo } from '../../../../lib/graphql/apolloClient';
 import { PageProps } from '../../../../types/types';
 import { TestDetails } from '../../../../components/TestDetails';
+import { useRouter } from 'next/router';
 
 interface TestPageProps extends PageProps, GetTest {}
 
 const TestPage: NextPage<TestPageProps> = ({ institution }) => {
   const test = institution?.test;
+
+  const router = useRouter();
+  const newAttemptUrl = `${router.asPath}/attempts/new`;
+
   if (!test) {
     return <ErrorPage statusCode={404} />;
   }
@@ -23,7 +29,17 @@ const TestPage: NextPage<TestPageProps> = ({ institution }) => {
       </Head>
 
       <main>
+        <Typography.Title className="title" level={2}>
+          {test.name}
+        </Typography.Title>
+
+        <Divider>Test Information</Divider>
+
         <TestDetails test={test} />
+
+        <Divider>Attempt Information</Divider>
+
+        <Button href={newAttemptUrl}>Attempt this Test</Button>
       </main>
     </div>
   );
