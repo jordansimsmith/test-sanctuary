@@ -34,9 +34,12 @@ const NewAttemptPage: NextPage<NewAttemptPageProps> = ({ institution }) => {
 
         <TestDetails test={test} />
 
-        <Divider>Test Questions</Divider>
+        <Divider>Attempt Information</Divider>
 
-        <AttemptForm questions={test.questions} />
+        <AttemptForm
+          test={test}
+          onFinish={(e) => alert(JSON.stringify(e, null, 2))}
+        />
       </main>
     </div>
   );
