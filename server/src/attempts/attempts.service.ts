@@ -46,6 +46,7 @@ export class AttemptsService {
         const answer = new Answer();
         answer.label = a.label;
         answer.answer = a.answer;
+        answer['question' as any] = a.questionId;
 
         return answer;
       }),

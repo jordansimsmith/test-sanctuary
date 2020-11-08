@@ -1,9 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Answer } from 'src/answers/answers.entity';
 import { Test } from 'src/tests/tests.entity';
 import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -30,4 +32,10 @@ export class Question {
   @Column()
   @Field()
   answer?: string;
+
+  @OneToMany(
+    () => Answer,
+    answer => answer.question,
+  )
+  answers: Promise<Answer[]>;
 }

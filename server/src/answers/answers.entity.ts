@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Attempt } from 'src/attempts/attempts.entity';
+import { Question } from 'src/questions/questions.entity';
 import {
   Column,
   Entity,
@@ -30,4 +31,11 @@ export class Answer {
   )
   @Field(() => Attempt)
   attempt: Promise<Attempt>;
+
+  @ManyToOne(
+    () => Question,
+    question => question.answers,
+  )
+  @Field(() => Question)
+  question: Promise<Question>;
 }
