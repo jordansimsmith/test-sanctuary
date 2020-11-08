@@ -82,6 +82,7 @@ type Question {
 }
 
 type Test {
+  attempt(id: ID!): Attempt
   code: Int!
   id: ID!
   institution: Institution!

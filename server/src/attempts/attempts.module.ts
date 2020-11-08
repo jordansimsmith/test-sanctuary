@@ -8,5 +8,6 @@ import { AttemptsService } from './attempts.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Attempt, Test])],
   providers: [AttemptsResolver, AttemptsService],
+  exports: [AttemptsService],
 })
 export class AttemptsModule {}

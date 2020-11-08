@@ -41,6 +41,7 @@ import { AnswersModule } from './answers/answers.module';
     GraphQLModule.forRoot({
       autoSchemaFile: 'src/schema.gql',
       sortSchema: true,
+      fieldResolverEnhancers: ['guards'],
       context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRootAsync({
