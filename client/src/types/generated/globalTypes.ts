@@ -13,8 +13,8 @@ export interface CreateInstitutionDto {
 }
 
 export interface CreateQuestionDto {
-  answer: string;
   label: string;
+  officialAnswer: string;
 }
 
 export interface CreateTestDto {

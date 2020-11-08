@@ -37,8 +37,8 @@ input CreateInstitutionDto {
 }
 
 input CreateQuestionDto {
-  answer: String!
   label: String!
+  officialAnswer: String!
 }
 
 input CreateTestDto {
@@ -75,9 +75,9 @@ type Query {
 }
 
 type Question {
-  answer: String!
   id: ID!
   label: String!
+  officialAnswer: String!
   test: Test!
 }
 

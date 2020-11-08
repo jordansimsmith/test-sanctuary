@@ -6,5 +6,5 @@ export class CreateQuestionDto {
   label: string;
 
   @Field()
-  answer?: string;
+  officialAnswer?: string;
 }

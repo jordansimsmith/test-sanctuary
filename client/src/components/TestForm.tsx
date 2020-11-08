@@ -153,8 +153,8 @@ export const TestForm: React.FC<TestFormProps> = ({ onFinish, loading }) => {
                 <Form.Item
                   {...field}
                   key={field.key}
-                  name={[field.name, 'answer']}
-                  fieldKey={[field.fieldKey, 'answer']}
+                  name={[field.name, 'officialAnswer']}
+                  fieldKey={[field.fieldKey, 'officialAnswer']}
                   label="Answer"
                   labelCol={{}}
                 >

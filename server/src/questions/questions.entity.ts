@@ -31,7 +31,7 @@ export class Question {
 
   @Column()
   @Field()
-  answer?: string;
+  officialAnswer?: string;
 
   @OneToMany(
     () => Answer,
