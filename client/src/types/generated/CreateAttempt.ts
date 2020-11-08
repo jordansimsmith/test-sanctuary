@@ -19,7 +19,6 @@ export interface CreateAttempt_createAttempt {
   __typename: "Attempt";
   id: string;
   name: string;
-  userId: string;
   answers: CreateAttempt_createAttempt_answers[];
   datetime: any;
 }

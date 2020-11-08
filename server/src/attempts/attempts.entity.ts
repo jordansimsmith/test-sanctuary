@@ -17,7 +17,6 @@ export class Attempt {
   id: number;
 
   @Column()
-  @Field()
   userId: string;
 
   @Column()

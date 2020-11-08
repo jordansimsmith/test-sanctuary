@@ -5,7 +5,6 @@ export const CREATE_ATTEMPT = gql`
     createAttempt(input: $attempt) {
       id
       name
-      userId
       answers {
         id
         answer
