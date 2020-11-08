@@ -6,7 +6,6 @@ type Answer {
   answer: String!
   attempt: Attempt!
   id: ID!
-  label: String!
   question: Question!
 }
 
@@ -21,7 +20,6 @@ type Attempt {
 
 input CreateAnswerDto {
   answer: String!
-  label: String!
   questionId: Int!
 }
 

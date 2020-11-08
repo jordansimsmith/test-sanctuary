@@ -10,16 +10,12 @@ import {
 } from 'typeorm';
 
 @Entity()
-@Unique('IDX_ANSWER_ATTEMPT_LABEL', ['id', 'label', 'attempt'])
+@Unique('IDX_ANSWER_ATTEMPT', ['id', 'attempt'])
 @ObjectType()
 export class Answer {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
-
-  @Column()
-  @Field()
-  label: string;
 
   @Column()
   @Field()
