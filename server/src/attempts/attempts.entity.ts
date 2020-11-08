@@ -24,6 +24,10 @@ export class Attempt {
   @Field()
   name: string;
 
+  @Column('datetime')
+  @Field()
+  datetime: Date;
+
   @OneToMany(
     () => Answer,
     answer => answer.attempt,

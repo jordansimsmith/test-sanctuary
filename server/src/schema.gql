@@ -11,6 +11,7 @@ type Answer {
 
 type Attempt {
   answers: [Answer!]!
+  datetime: DateTime!
   id: ID!
   name: String!
   test: Test!
@@ -47,6 +48,11 @@ input CreateTestDto {
   testFile: Upload!
   year: Int!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Institution {
   displayName: String!

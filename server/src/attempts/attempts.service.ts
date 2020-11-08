@@ -38,6 +38,7 @@ export class AttemptsService {
     const attempt = new Attempt();
     attempt.name = createAttemptDto.name;
     attempt.userId = userId;
+    attempt.datetime = new Date();
     attempt['test' as any] = createAttemptDto.testId;
 
     attempt.answers = Promise.resolve(
