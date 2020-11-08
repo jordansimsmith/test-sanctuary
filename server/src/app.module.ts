@@ -10,6 +10,8 @@ import { InstitutionsModule } from './institutions/institutions.module';
 import { QuestionsModule } from './questions/questions.module';
 import { TestsModule } from './tests/tests.module';
 import { AuthModule } from './auth/auth.module';
+import { AttemptsModule } from './attempts/attempts.module';
+import { AnswersModule } from './answers/answers.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { AuthModule } from './auth/auth.module';
     TestsModule,
     QuestionsModule,
     AuthModule,
+    AttemptsModule,
+    AnswersModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         DATABASE_HOST: Joi.string().required(),
