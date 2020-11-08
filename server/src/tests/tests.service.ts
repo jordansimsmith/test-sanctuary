@@ -44,22 +44,9 @@ export class TestsService {
     return this.testsRepository.find();
   }
 
-  findWhere(query: Partial<Test>): Promise<Test[]> {
-    return this.testsRepository.find({ where: query });
-  }
-
-  async findOne(testId: number, institutionId: string): Promise<Test> {
-    const test = await this.testsRepository.findOne(testId);
-    if (!test) {
-      return null;
-    }
-
-    // ensure the test belongs to the requested institution
-    const institution = await test.institution;
-    if (institution.id !== institutionId) {
-      return null;
-    }
-
-    return test;
+  async findOne(id: number, institutionId: string): Promise<Test> {
+    return this.testsRepository.findOne({
+      where: { id, institution: { id: institutionId } },
+    });
   }
 }
