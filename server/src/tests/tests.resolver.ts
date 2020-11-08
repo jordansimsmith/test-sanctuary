@@ -33,10 +33,11 @@ export class TestsResolver {
   @ResolveField(() => Attempt, { nullable: true })
   @UseGuards(GqlAuthGuard)
   async attempt(
+    @Root() test: Test,
     @Args('id', { type: () => ID }) id: number,
     @CurrentUser() user: AccessToken,
   ) {
-    return this.attemptsService.findOne(id, user.sub);
+    return this.attemptsService.findOne(id, test.id, user.sub);
   }
 
   @Mutation(() => Test)

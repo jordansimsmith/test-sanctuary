@@ -54,7 +54,9 @@ export class AttemptsService {
     return this.attemptsRepository.save(attempt);
   }
 
-  findOne(id: number, userId: string) {
-    return this.attemptsRepository.findOne({ where: { id, userId } });
+  findOne(id: number, testId: number, userId: string) {
+    return this.attemptsRepository.findOne({
+      where: { id, userId, test: { id: testId } },
+    });
   }
 }
