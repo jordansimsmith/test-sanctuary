@@ -27,7 +27,7 @@ export class AttemptsService {
     const completeAnswers =
       questions.length === createAttemptDto.answers.length &&
       questions.every(q =>
-        createAttemptDto.answers.some(a => a.label === q.label),
+        createAttemptDto.answers.some(a => a.questionId === q.id),
       );
     if (!completeAnswers) {
       throw new Error(
