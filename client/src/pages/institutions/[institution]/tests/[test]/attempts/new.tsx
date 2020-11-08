@@ -1,5 +1,7 @@
-import { Divider, Typography } from 'antd';
+import { Alert, Divider, Typography } from 'antd';
 import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useMutation } from '@apollo/client';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
 import { initializeApollo } from '../../../../../../lib/graphql/apolloClient';
@@ -8,10 +10,36 @@ import { PageProps } from '../../../../../../types/types';
 import { TestDetails } from '../../../../../../components/TestDetails';
 import { GetTestAndQuestions } from '../../../../../../types/generated/GetTestAndQuestions';
 import { AttemptForm } from '../../../../../../components/AttemptForm';
+import { getSessionOrLogin } from '../../../../../../lib/auth/auth';
+import {
+  CreateAttempt,
+  CreateAttemptVariables,
+} from '../../../../../../types/generated/CreateAttempt';
+import { CREATE_ATTEMPT } from '../../../../../../lib/graphql/attempts';
 
 interface NewAttemptPageProps extends PageProps, GetTestAndQuestions {}
 
 const NewAttemptPage: NextPage<NewAttemptPageProps> = ({ institution }) => {
+  const router = useRouter();
+
+  const navigateToNewAttempt = (data: CreateAttempt) => {
+    const newUrl = `/institutions/${router.query.institution}/tests/${router.query.test}/attempts/${data.createAttempt.id}`;
+    router.push(newUrl);
+  };
+
+  const [createAttempt, { loading, error }] = useMutation<
+    CreateAttempt,
+    CreateAttemptVariables
+  >(CREATE_ATTEMPT, { onCompleted: navigateToNewAttempt });
+
+  const onFinish = async (attempt) => {
+    try {
+      await createAttempt({ variables: { attempt } });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const test = institution?.test;
 
   if (!test) {
@@ -36,10 +64,9 @@ const NewAttemptPage: NextPage<NewAttemptPageProps> = ({ institution }) => {
 
         <Divider>Attempt Information</Divider>
 
-        <AttemptForm
-          test={test}
-          onFinish={(e) => alert(JSON.stringify(e, null, 2))}
-        />
+        {error && <Alert type="error" message={error.message} />}
+
+        <AttemptForm test={test} onFinish={onFinish} loading={loading} />
       </main>
     </div>
   );
@@ -48,6 +75,11 @@ const NewAttemptPage: NextPage<NewAttemptPageProps> = ({ institution }) => {
 export const getServerSideProps: GetServerSideProps<NewAttemptPageProps> = async (
   ctx,
 ) => {
+  const session = await getSessionOrLogin(ctx);
+  if (!session) {
+    return;
+  }
+
   const institutionId = ctx.query.institution;
   const testId = ctx.query.test;
 

@@ -29,7 +29,7 @@ const NewTestPage: NextPage<NewTestPageProps> = () => {
 
   const onFinish = async (test) => {
     try {
-      createTest({ variables: { test } });
+      await createTest({ variables: { test } });
     } catch (e) {
       console.error(e);
     }
