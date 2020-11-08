@@ -26,3 +26,22 @@ export const CREATE_TEST = gql`
     }
   }
 `;
+
+export const GET_TEST_AND_QUESTIONS = gql`
+  query GetTestAndQuestions($institutionId: ID!, $testId: ID!) {
+    institution(id: $institutionId) {
+      test(id: $testId) {
+        id
+        name
+        subject
+        code
+        year
+        testFileLink
+        questions {
+          id
+          label
+        }
+      }
+    }
+  }
+`;
