@@ -7,6 +7,7 @@ import { GET_ATTEMPT } from '../../../../../../lib/graphql/attempts';
 import { GetAttempt } from '../../../../../../types/generated/GetAttempt';
 import { PageProps } from '../../../../../../types/types';
 import { getSessionOrLogin } from '../../../../../../lib/auth/auth';
+import { AttemptDetails } from '../../../../../../components/AttemptDetails';
 
 interface AttemptPageProps extends PageProps, GetAttempt {}
 
@@ -26,6 +27,8 @@ const AttemptPage: NextPage<AttemptPageProps> = ({ institution }) => {
         <Typography.Title className="title" level={2}>
           {attempt.name}
         </Typography.Title>
+
+        <AttemptDetails attempt={attempt} />
       </main>
     </div>
   );

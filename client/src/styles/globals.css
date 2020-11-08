@@ -57,3 +57,13 @@ a {
 .autocomplete-block {
   flex-grow: 1;
 }
+
+.correct-answer {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+.incorrect-answer {
+  background: #fff2f0;
+  border-color: #ffccc7;
+}
