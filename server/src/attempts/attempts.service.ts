@@ -63,4 +63,10 @@ export class AttemptsService {
   findAll(userId: string) {
     return this.attemptsRepository.find({ where: { userId } });
   }
+
+  findAllForTest(testId: number, userId: string) {
+    return this.attemptsRepository.find({
+      where: { userId, test: { id: testId } },
+    });
+  }
 }

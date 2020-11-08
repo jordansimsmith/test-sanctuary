@@ -30,6 +30,12 @@ export class TestsResolver {
     return this.filesService.getDownloadLink(test.testFileKey);
   }
 
+  @ResolveField(() => [Attempt])
+  @UseGuards(GqlAuthGuard)
+  async attempts(@Root() test: Test, @CurrentUser() user: AccessToken) {
+    return this.attemptsService.findAllForTest(test.id, user.sub);
+  }
+
   @ResolveField(() => Attempt, { nullable: true })
   @UseGuards(GqlAuthGuard)
   async attempt(
