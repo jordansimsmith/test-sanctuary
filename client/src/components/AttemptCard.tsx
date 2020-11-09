@@ -22,7 +22,7 @@ export const AttemptCard: React.FC<AttemptCardProps> = ({
 
   return (
     <Link href={attemptUrl}>
-      <Card title={name} hoverable>
+      <Card title={name} hoverable size="small">
         <Descriptions>
           <Descriptions.Item label="Test Name">
             <Tag color="blue">{testName}</Tag>

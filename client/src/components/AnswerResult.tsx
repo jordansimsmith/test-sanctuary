@@ -22,7 +22,7 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
   }
 
   return (
-    <Card title={`Question: ${label}`} className={className}>
+    <Card title={`Question: ${label}`} className={className} size="small">
       <Descriptions>
         <Descriptions.Item label="Your Answer">{answer}</Descriptions.Item>
         <Descriptions.Item label="Official Answer">
