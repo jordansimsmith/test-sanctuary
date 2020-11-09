@@ -61,12 +61,16 @@ export class AttemptsService {
   }
 
   findAll(userId: string) {
-    return this.attemptsRepository.find({ where: { userId } });
+    return this.attemptsRepository.find({
+      where: { userId },
+      order: { datetime: 'DESC' },
+    });
   }
 
   findAllForTest(testId: number, userId: string) {
     return this.attemptsRepository.find({
       where: { userId, test: { id: testId } },
+      order: { datetime: 'DESC' },
     });
   }
 }
