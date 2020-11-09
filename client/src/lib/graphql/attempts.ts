@@ -40,3 +40,20 @@ export const GET_ATTEMPT = gql`
     }
   }
 `;
+
+export const GET_ATTEMPTS = gql`
+  query GetAttempts {
+    attempts {
+      id
+      name
+      datetime
+      test {
+        id
+        name
+        institution {
+          id
+        }
+      }
+    }
+  }
+`;
