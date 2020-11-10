@@ -41,7 +41,7 @@ const TestPage: NextPage<TestPageProps> = ({ institution }) => {
 
         <Divider>Test Information</Divider>
 
-        <TestDetails test={test} />
+        <TestDetails {...test} />
 
         <Divider>Attempt Information</Divider>
 
