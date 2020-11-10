@@ -30,6 +30,7 @@ export const AttemptDetails: React.FC<AttemptDetailsProps> = ({ attempt }) => {
             label={a.question.label}
             answer={a.answer}
             officialAnswer={a.question.officialAnswer}
+            communityAnswer={a.question.communityAnswer}
           />
         ))}
       </Space>

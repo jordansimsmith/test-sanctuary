@@ -13,11 +13,19 @@ export interface GetAttempt_institution_test_attempt_test {
   name: string;
 }
 
+export interface GetAttempt_institution_test_attempt_answers_question_communityAnswer {
+  __typename: "CommunityAnswer";
+  answer: string;
+  count: number;
+  total: number;
+}
+
 export interface GetAttempt_institution_test_attempt_answers_question {
   __typename: "Question";
   id: string;
   label: string;
   officialAnswer: string;
+  communityAnswer: GetAttempt_institution_test_attempt_answers_question_communityAnswer;
 }
 
 export interface GetAttempt_institution_test_attempt_answers {

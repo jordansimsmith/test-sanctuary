@@ -33,6 +33,11 @@ export const GET_ATTEMPT = gql`
               id
               label
               officialAnswer
+              communityAnswer {
+                answer
+                count
+                total
+              }
             }
           }
         }

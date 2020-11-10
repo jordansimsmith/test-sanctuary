@@ -1,15 +1,21 @@
-import { Card, Descriptions } from 'antd';
+import { Card, Descriptions, Typography } from 'antd';
 
 interface AnswerResultProps {
   label: string;
   answer: string;
   officialAnswer?: string;
+  communityAnswer: {
+    answer: string;
+    count: number;
+    total: number;
+  };
 }
 
 export const AnswerResult: React.FC<AnswerResultProps> = ({
   label,
   answer,
   officialAnswer,
+  communityAnswer,
 }) => {
   let className: string;
 
@@ -23,10 +29,21 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
 
   return (
     <Card title={`Question: ${label}`} className={className} size="small">
-      <Descriptions>
-        <Descriptions.Item label="Your Answer">{answer}</Descriptions.Item>
+      <Descriptions layout="vertical">
+        <Descriptions.Item label="Your Answer">
+          <Typography.Text strong>{answer}</Typography.Text>
+        </Descriptions.Item>
+
         <Descriptions.Item label="Official Answer">
-          {officialAnswer || 'No offical answer available at this time'}
+          <Typography.Text strong={!!officialAnswer}>
+            {officialAnswer || 'No offical answer available at this time'}
+          </Typography.Text>
+        </Descriptions.Item>
+
+        <Descriptions.Item label="Community Answer">
+          <Typography.Text strong>{communityAnswer.answer} </Typography.Text>
+          is the most popular answer, with {communityAnswer.count}/
+          {communityAnswer.total} votes.
         </Descriptions.Item>
       </Descriptions>
     </Card>
