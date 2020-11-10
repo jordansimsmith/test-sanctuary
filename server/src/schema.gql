@@ -17,6 +17,12 @@ type Attempt {
   test: Test!
 }
 
+type CommunityAnswer {
+  answer: String!
+  count: Int!
+  total: Int!
+}
+
 input CreateAnswerDto {
   answer: String!
   questionId: Int!
@@ -73,6 +79,7 @@ type Query {
 }
 
 type Question {
+  communityAnswer: CommunityAnswer!
   id: ID!
   label: String!
   officialAnswer: String!
