@@ -27,8 +27,14 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
     className = 'incorrect-answer';
   }
 
+  const cardTitle = (
+    <Typography.Text>
+      Question: <Typography.Text strong>{label}</Typography.Text>
+    </Typography.Text>
+  );
+
   return (
-    <Card title={`Question: ${label}`} className={className} size="small">
+    <Card title={cardTitle} className={className} size="small">
       <Descriptions layout="vertical">
         <Descriptions.Item label="Your Answer">
           <Typography.Text strong>{answer}</Typography.Text>
