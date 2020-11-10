@@ -51,3 +51,5 @@ spec:
               value: https://192.168.1.7:30977
             - name: NEXT_PUBLIC_SERVER_BASE
               value: https://192.168.1.7:30977/api
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: '0'
