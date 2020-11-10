@@ -44,7 +44,7 @@ export class AttemptsService {
     attempt.answers = Promise.resolve(
       createAttemptDto.answers.map(a => {
         const answer = new Answer();
-        answer.answer = a.answer;
+        answer.answer = a.answer.toLowerCase();
         answer['question' as any] = a.questionId;
 
         return answer;
