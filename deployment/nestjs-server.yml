@@ -60,8 +60,6 @@ spec:
                 secretKeyRef:
                   name: aws
                   key: aws-secret-key
-            - name: AWS_S3_ENDPOINT
-              value: https://192.168.1.7:30977/api/storage
             - name: AWS_S3_BUCKET
               value: test-sanctuary
             - name: AUTH0_ISSUER_URL
