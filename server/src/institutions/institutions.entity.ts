@@ -19,4 +19,7 @@ export class Institution {
   )
   @Field(() => [Test])
   tests: Promise<Test[]>;
+
+  @Column()
+  ownerId: string;
 }

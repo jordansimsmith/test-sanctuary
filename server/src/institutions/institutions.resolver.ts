@@ -8,7 +8,9 @@ import {
   Resolver,
   Root,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/auth.decorator';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
+import { AccessToken } from 'src/auth/interfaces/access-token.interface';
 import { Test } from 'src/tests/tests.entity';
 import { TestsService } from 'src/tests/tests.service';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
@@ -42,7 +44,10 @@ export class InstitutionsResolver {
 
   @Mutation(() => Institution)
   @UseGuards(GqlAuthGuard)
-  async createInstitution(@Args('input') input: CreateInstitutionDto) {
-    return this.institutionsService.create(input);
+  async createInstitution(
+    @Args('input') input: CreateInstitutionDto,
+    @CurrentUser() user: AccessToken,
+  ) {
+    return this.institutionsService.create(input, user.sub);
   }
 }

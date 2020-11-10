@@ -13,6 +13,7 @@ export class InstitutionsService {
 
   async create(
     createInstitutionDto: CreateInstitutionDto,
+    userId: string,
   ): Promise<Institution> {
     const idRegex = /^[a-zA-Z0-9]+[a-zA-Z0-9-_]+[a-zA-Z0-9]+$/;
     if (!idRegex.test(createInstitutionDto.id)) {
@@ -30,6 +31,7 @@ export class InstitutionsService {
     const institution = new Institution();
     institution.id = createInstitutionDto.id;
     institution.displayName = createInstitutionDto.displayName;
+    institution.ownerId = userId;
 
     return this.institutionsRepository.save(institution);
   }
