@@ -1,15 +1,21 @@
-import { Button, Divider, Typography } from 'antd';
+import { Button, Divider, Space, Typography } from 'antd';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
-import { GET_TEST } from '../../../../lib/graphql/tests';
-import { GetTest } from '../../../../types/generated/GetTest';
+import { GET_TEST_AND_ATTEMPTS } from '../../../../lib/graphql/tests';
 import { initializeApollo } from '../../../../lib/graphql/apolloClient';
 import { PageProps } from '../../../../types/types';
 import { TestDetails } from '../../../../components/TestDetails';
 import { useRouter } from 'next/router';
+import {
+  GetTestAndAttempts,
+  GetTestAndAttemptsVariables,
+} from '../../../../types/generated/GetTestAndAttempts';
+import { auth } from '../../../../lib/auth/auth';
+import React from 'react';
+import { AttemptCard } from '../../../../components/AttemptCard';
 
-interface TestPageProps extends PageProps, GetTest {}
+interface TestPageProps extends PageProps, GetTestAndAttempts {}
 
 const TestPage: NextPage<TestPageProps> = ({ institution }) => {
   const test = institution?.test;
@@ -39,7 +45,24 @@ const TestPage: NextPage<TestPageProps> = ({ institution }) => {
 
         <Divider>Attempt Information</Divider>
 
-        <Button href={newAttemptUrl}>Attempt this Test</Button>
+        <Space direction="vertical">
+          <Button href={newAttemptUrl} type="primary">
+            Attempt this Test
+          </Button>
+
+          {test.attempts &&
+            test.attempts.map((a) => (
+              <AttemptCard
+                key={a.id}
+                id={+a.id}
+                testName={test.name}
+                datetime={a.datetime}
+                name={a.name}
+                testId={+test.id}
+                institutionId={institution.id}
+              />
+            ))}
+        </Space>
       </main>
     </div>
   );
@@ -48,14 +71,24 @@ const TestPage: NextPage<TestPageProps> = ({ institution }) => {
 export const getServerSideProps: GetServerSideProps<TestPageProps> = async (
   ctx,
 ) => {
-  const institutionId = ctx.query.institution;
-  const testId = ctx.query.test;
+  const session = await auth.getSession(ctx.req);
+
+  const institutionId = ctx.query.institution as string;
+  const testId = ctx.query.test as string;
 
   const client = initializeApollo();
 
-  const { data } = await client.query<GetTest>({
-    query: GET_TEST,
-    variables: { institutionId, testId },
+  const { data } = await client.query<
+    GetTestAndAttempts,
+    GetTestAndAttemptsVariables
+  >({
+    query: GET_TEST_AND_ATTEMPTS,
+    variables: { institutionId, testId, authenticated: !!session },
+    context: {
+      headers: {
+        authorization: session ? `Bearer ${session.accessToken}` : '',
+      },
+    },
   });
 
   return {
