@@ -49,4 +49,7 @@ export class Test {
 
   @Column()
   testFileKey: string;
+
+  @Column()
+  creatorId: string;
 }

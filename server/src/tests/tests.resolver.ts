@@ -48,7 +48,10 @@ export class TestsResolver {
 
   @Mutation(() => Test)
   @UseGuards(GqlAuthGuard)
-  async createTest(@Args('input') input: CreateTestDto) {
-    return this.testsService.create(input);
+  async createTest(
+    @Args('input') input: CreateTestDto,
+    @CurrentUser() user: AccessToken,
+  ) {
+    return this.testsService.create(input, user.sub);
   }
 }

@@ -13,7 +13,7 @@ export class TestsService {
     private readonly filesService: FilesService,
   ) {}
 
-  async create(createTestDto: CreateTestDto): Promise<Test> {
+  async create(createTestDto: CreateTestDto, userId: string): Promise<Test> {
     const fileKey = await this.filesService.uploadTest(
       await createTestDto.testFile,
       createTestDto.institutionId,
@@ -26,6 +26,7 @@ export class TestsService {
     test.year = createTestDto.year;
     test['institution' as any] = createTestDto.institutionId;
     test.testFileKey = fileKey;
+    test.creatorId = userId;
 
     test.questions = Promise.resolve(
       createTestDto.questions.map(q => {
