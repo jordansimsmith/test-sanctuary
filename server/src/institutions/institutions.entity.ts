@@ -21,5 +21,5 @@ export class Institution {
   tests: Promise<Test[]>;
 
   @Column()
-  ownerId: string;
+  creatorId: string;
 }

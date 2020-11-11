@@ -31,7 +31,7 @@ export class InstitutionsService {
     const institution = new Institution();
     institution.id = createInstitutionDto.id;
     institution.displayName = createInstitutionDto.displayName;
-    institution.ownerId = userId;
+    institution.creatorId = userId;
 
     return this.institutionsRepository.save(institution);
   }
