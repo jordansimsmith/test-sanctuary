@@ -4,8 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import Joi from 'joi';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { InstitutionsModule } from './institutions/institutions.module';
 import { QuestionsModule } from './questions/questions.module';
 import { TestsModule } from './tests/tests.module';
@@ -60,7 +58,5 @@ import { AnswersModule } from './answers/answers.module';
       }),
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
