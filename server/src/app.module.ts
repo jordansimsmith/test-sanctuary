@@ -29,6 +29,7 @@ import { AnswersModule } from './answers/answers.module';
 
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_KEY: Joi.string().required(),
+        AWS_REGION: Joi.string().optional(),
         AWS_S3_ENDPOINT: Joi.string().optional(),
         AWS_S3_BUCKET: Joi.string().required(),
 

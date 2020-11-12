@@ -21,6 +21,7 @@ export class FilesService {
       endpoint: configService.get<string | undefined>('AWS_S3_ENDPOINT'),
       s3ForcePathStyle: true,
       signatureVersion: 'v4',
+      region: configService.get<string | undefined>('AWS_REGION'),
     });
   }
 
